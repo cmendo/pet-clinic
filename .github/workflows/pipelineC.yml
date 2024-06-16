@@ -40,6 +40,7 @@ jobs:
         else 
           echo "Tipo de proyecto desconocido"
         fi
+        
     - name: Validando existencia del proyecto en SonarCloud
       id: ValidateProjectOnSonar
       run: |
@@ -55,14 +56,15 @@ jobs:
           curl -X POST -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=${{ github.event.repository.name }}'
         fi
 
-    - name: Enable Execution Gradle
+    - name: Enable Execution Gradlew
       run: |
         chmod 777 gradlew
 
     - name: Run SoncarQube analysis
       run: |
         ./gradlew sonarqube \ 
-        -Dsonar.projectKey=${{ github.event.repository.name }} \
+        -Dsonar.projectKey=cmendo_pet-clinic
+        #-Dsonar.projectKey=${{ github.event.repository.name }} \
         -Dsonar.organization=cmendo \
         -Dsonar.host.url=https://sonarcloud.io \
         -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
