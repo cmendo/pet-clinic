@@ -42,26 +42,25 @@ jobs:
       id: tipoProyecto
       if: steps.ValidateProjectOnSonar.outputs.proyectoExiste == '1'
       run:  |
-        if [ -f "build.gradle" ]
+        if [ -f "build.gradlew" ]
         then
           echo "Proyecto Java"
-          if grep -q 'id "org.sonarqube" version "3.3"' build.gradle
+          if grep -q 'id "org.sonarqube" version "3.3"' build.gradlew
           then
-            echo "El login de SonarCloud ya esta presente en buil.gradle"
+            echo "El login de SonarCloud ya esta presente en build.gradlew"
           else
-            sed -i '/id '\''java'\''/a \ \ \ \ id '\''org.sonarqube'\'' version '\''3.3'\''' build.gradle
-            echo "El plugin de SonarCloud no esta presente y se ha añadido en build.gradle"
-            cat build.gradle
+            sed -i '/id '\''java'\''/a \ \ \ \ id '\''org.sonarqube'\'' version '\''3.3'\''' build.gradlew
+            echo "El plugin de SonarCloud no esta presente y se ha añadido en build.gradlew"
+            cat build.gradlew
           fi
         else 
           echo "Tipo de proyecto desconocido"
         fi
 
-    - name: Run SoncarQube analysis
+    - name: Run SonarQube analysis
       run: |
         ./gradlew sonarqube \ 
-        -Dsonar.projectKey=cmendo_pet-clinic
-        #-Dsonar.projectKey=${{ github.event.repository.name }} \
+        -Dsonar.projectKey=${{ github.event.repository.name }} \
         -Dsonar.organization=cmendo \
         -Dsonar.host.url=https://sonarcloud.io \
         -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
