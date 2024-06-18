@@ -62,8 +62,8 @@ jobs:
     - name: Run SonarQube analysis
       run: |
         ./gradlew sonarqube \
-        -Dsonar.projectKey=key_pet-clinic \
+        -Dsonar.projectKey=${{ github.event.repository.name }} \
         -Dsonar.organization=cmendo \
         -Dsonar.host.url=https://sonarcloud.io \
         -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-        -Dsonar.branch=
+        -Dsonar.branch=feat-devsecops
