@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - feat-devsecops
-      
-jobs:
+
+jobs:        
   SAST:
     runs-on: ubuntu-latest
     steps:
@@ -18,8 +18,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Hola Mundo
+      run: | 
+        echo 'Hola mundo!'
+    
     - name: Build
-      run: |
+      run: | 
         chmod 777 gradlew
         ./gradlew build
 
@@ -43,23 +47,31 @@ jobs:
 
     - name: Validando tipo de proyecto
       id: tipoProyecto
-      if: steps.ValidateProjectOnSonar.outputs.proyectoExiste == '1'
-      run:  |
+      if: steps.validateProjectOnSonar.outputs.proyectoExiste == '1'
+      run: |
+        pwd
+        ls -R
         if [ -f "build.gradle" ]
         then
           echo "Proyecto Java"
           if grep -q 'id "org.sonarqube" version "3.3"' build.gradle
           then
-            echo "El plugin de SonarCloud ya esta presente en build.gradle"
+            echo "El plugin de SonarCloud ya está presente en build.gradle"
           else
             sed -i '/id '\''java'\''/a \ \ \ \ id '\''org.sonarqube'\'' version '\''3.3'\''' build.gradle
-            echo "El plugin de SonarCloud no esta presente y se ha añadido en build.gradle"
+            echo "El plugin de SonarCloud no estaba presente y se ha sido añadido a build.gradle"
             cat build.gradle
           fi
-        else 
+
+        else
           echo "Tipo de proyecto desconocido"
         fi
 
+
+    - name: Enable execution gradlew
+      run: | 
+        chmod 777 gradlew
+    
     - name: Run SonarQube analysis
       run: |
         ./gradlew sonarqube \
@@ -67,4 +79,50 @@ jobs:
         -Dsonar.organization=cmendo \
         -Dsonar.host.url=https://sonarcloud.io \
         -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-        -Dsonar.branch=feat-devsecops
+        -Dsonar.branch.name=
+
+
+#--------------------- SCA -------------------------------------------
+      
+  SCA:
+    needs: SAST
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Checkout code
+      uses: actions/checkout@v2      
+
+    - name: Build
+      id: build
+      run: |
+        #pwd
+        #ls -R
+        if [ -f "build.gradle" ]
+        then
+          echo "Utiliza build.gradle, proyecto Java"
+          echo "Se habilita permiso de ejecución de archivo gradlew"
+          chmod 777 gradlew
+          ./gradlew build
+        else
+          echo "Otro tipo de proyecto"
+        fi
+    
+    - name: Dependency Check
+      uses: dependency-check/Dependency-Check_Action@1.1.0
+      env:
+        JAVA_HOME: /opt/jdk
+      id: Depcheck
+      with:
+        project: '${{ github.event.repository.name }}'
+        path: '.'
+        format: 'HTML'
+        out: 'reports'
+        args: >
+          --failOnCVSS 7
+          --enableRetired
+
+    - name: Upload Test result
+      uses: actions/upload-artifact@master
+      with:
+        name: Depcheck report
+        path: ${{github.workspace}}/reports
