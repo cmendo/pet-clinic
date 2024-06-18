@@ -27,7 +27,12 @@ jobs:
       id: ValidateProjectOnSonar
       run: |
         set +e
-        curl -f -x POST -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/projects/create' -d 'name=${{ github.event.repository.name }}' -d 'project=${{ github.event.repository.name }}' -d 'organization=cmendo' -d 'visibility=public'
+        curl -f -x POST -u '${{ secrets.SONAR_TOKEN }}:' \
+        'https://sonarcloud.io/api/projects/create' \
+        -d 'name=${{ github.event.repository.name }}' \
+        -d 'project=${{ github.event.repository.name }}' \
+        -d 'organization=cmendo' \
+        -d 'visibility=public'
         if [ $? -ne 0 ]
         then
           echo "El proyecto  ya existe en Sonarcloud"
@@ -35,7 +40,10 @@ jobs:
           echo "Proyecto ${{ github.event.repository.name }} fue creado exitosamente en SonarCloud"
 
           echo "Se establece rama main como rama por defecto"
-          curl -X POST -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=${{ github.event.repository.name }}'
+          curl -X POST -u '${{ secrets.SONAR_TOKEN }}:' \
+          'https://sonarcloud.io/api/project_branches/rename' \
+          -d 'name=main' \
+          -d 'project=${{ github.event.repository.name }}'
         fi
 
     - name: Validando tipo de proyecto
