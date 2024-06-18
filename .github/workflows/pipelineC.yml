@@ -64,6 +64,6 @@ jobs:
         ./gradlew sonarqube \
         -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
         -Dsonar.organization=cmendo \
-        -Dsonar.projectKey=pet-clinic \
+        -Dsonar.projectKey=cmendo_pet-clinic \
         -Dsonar.host.url=https://sonarcloud.io \
         -Dsonar.branch.name=feat-devsecops
