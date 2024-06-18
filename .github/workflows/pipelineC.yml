@@ -61,7 +61,7 @@ jobs:
       run: |
         ./gradlew sonarqube \
         -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
-        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.host.url=cmendo_https://sonarcloud.io \
         -Dsonar.organization=cmendo \
         -Dsonar.projectKey=${{ github.event.repository.name }} \
         -Dsonar.branch.name=feat-devsecops
