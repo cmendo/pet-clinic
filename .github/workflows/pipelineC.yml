@@ -47,7 +47,7 @@ jobs:
           echo "Proyecto Java"
           if grep -q 'id "org.sonarqube" version "3.3"' build.gradle
           then
-            echo "El login de SonarCloud ya esta presente en build.gradle"
+            echo "El plugin de SonarCloud ya esta presente en build.gradle"
           else
             sed -i '/id '\''java'\''/a \ \ \ \ id '\''org.sonarqube'\'' version '\''3.3'\''' build.gradle
             echo "El plugin de SonarCloud no esta presente y se ha añadido en build.gradle"
@@ -60,8 +60,8 @@ jobs:
     - name: Run SonarQube analysis
       run: |
         ./gradlew sonarqube \
-        -Dsonar.projectKey=${{ github.event.repository.name }} \
-        -Dsonar.organization=cmendo \
+        -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
         -Dsonar.host.url=https://sonarcloud.io \
-        -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+        -Dsonar.organization=cmendo \
+        -Dsonar.projectKey=${{ github.event.repository.name }} \
         -Dsonar.branch.name=feat-devsecops
