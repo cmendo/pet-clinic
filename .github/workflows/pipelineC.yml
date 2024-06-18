@@ -38,6 +38,7 @@ jobs:
           echo "Se establece rama main como rama por defecto"
           curl -X POST -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=${{ github.event.repository.name }}'
         fi
+        set -e
 
     - name: Validando tipo de proyecto
       id: tipoProyecto
@@ -63,7 +64,6 @@ jobs:
         ./gradlew sonarqube \
         -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
         -Dsonar.organization=cmendo \
-        #-Dsonar.projectKey=${{ github.event.repository.name }} \
         -Dsonar.projectKey=cmendo_pet-clinic \
         -Dsonar.host.url=https://sonarcloud.io \
         -Dsonar.branch.name=feat-devsecops
