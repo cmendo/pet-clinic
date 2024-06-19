@@ -37,13 +37,11 @@ jobs:
         if [ $? -ne 0 ]; then
           echo "Proyecto ya existe en Sonarcloud"
           echo "::set-output name=proyectoExiste::1"
-          #run: echo "{name}={value}" >> $GITHUB_OUTPUT
-          #run: echo "proyectoExiste=1" >> $GITHUB_OUTPUT
         else
           echo "Proyecto ${{ github.event.repository.name }} creado exitosamente en Sonarcloud"
           
           echo "Se establece rama main como rama por defecto"
-          curl -X POST -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=${{ github.event.repository.name }}'
+          curl -X POST -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/project_branches/rename' -d 'name=main' -d 'project=cursodevsecops'
         fi
         set -e
 
