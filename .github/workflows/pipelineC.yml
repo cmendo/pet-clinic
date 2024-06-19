@@ -147,7 +147,7 @@ jobs:
     - name: Build Docker
       run: |
         ls -R
-        docker build --tag b4b4y4g4x/cursodevsecops-test:latest .
+        docker build --tag cmendoza83/cursodevsecops-test:latest .
 
     - name: Push Docker
       run: | 
