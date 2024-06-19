@@ -67,14 +67,14 @@ jobs:
           echo "Tipo de proyecto desconocido"
         fi
     
-    #- name: Run SonarQube analysis
-    #  run: |
-    #    ./gradlew sonarqube \
-    #    -Dsonar.projectKey=cursodevsecops \
-    #    -Dsonar.organization=cursodevsecops \
-    #    -Dsonar.host.url=https://sonarcloud.io \
-    #    -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
-    #    -Dsonar.branch.name=feat-devsecops
+    - name: Run SonarQube analysis
+      run: |
+        ./gradlew sonarqube \
+        -Dsonar.projectKey=cursodevsecops \
+        -Dsonar.organization=cursodevsecops \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+        -Dsonar.branch.name=feat-devsecops
 
 
 #--------------------- SCA -------------------------------------------
