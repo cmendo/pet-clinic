@@ -148,10 +148,9 @@ jobs:
       run: |
         ls -R
         docker build --tag cmendoza83/cursodevsecops-test:latest .
-
     - name: Push Docker
       run: | 
-        docker push b4b4y4g4x/cursodevsecops-test:latest
+        docker push cmendoza83/cursodevsecops-test:latest
 
 # ------------------ Docker Scan ------------------------------------
 
