@@ -203,4 +203,4 @@ jobs:
 #    - name: OWASP ZAP Scan
 #      run: |
 #        docker pull owasp/zap2docker-stable
-        docker run --rm -v ${PWD}:/zap/wrk/:rw -t owasp/zap2docker-stable & zap-baseline.py -t http://localhost:8085 -r DAST.html
+#        docker run --rm -v ${PWD}:/zap/wrk/:rw -t owasp/zap2docker-stable & zap-baseline.py -t http://localhost:8085 -r DAST.html
