@@ -36,9 +36,9 @@ jobs:
         curl -f -X POST -u '${{ secrets.SONAR_TOKEN }}:' 'https://sonarcloud.io/api/projects/create' -d 'name=${{ github.event.repository.name }}' -d 'project=${{ github.event.repository.name }}' -d 'organization=cursodevsecops' -d 'visibility=public'
         if [ $? -ne 0 ]; then
           echo "Proyecto ya existe en Sonarcloud"
-          #echo "::set-output name=proyectoExiste::1"
+          echo "::set-output name=proyectoExiste::1"
           #run: echo "{name}={value}" >> $GITHUB_OUTPUT
-          run: echo "proyectoExiste=1" >> $GITHUB_OUTPUT
+          #run: echo "proyectoExiste=1" >> $GITHUB_OUTPUT
         else
           echo "Proyecto ${{ github.event.repository.name }} creado exitosamente en Sonarcloud"
           
@@ -68,11 +68,6 @@ jobs:
         else
           echo "Tipo de proyecto desconocido"
         fi
-
-
-    - name: Enable execution gradlew
-      run: | 
-        chmod 777 gradlew
     
     - name: Run SonarQube analysis
       run: |
@@ -80,7 +75,7 @@ jobs:
         -Dsonar.projectKey=${{ github.event.repository.name }} \
         -Dsonar.organization=cursodevsecops \
         -Dsonar.host.url=https://sonarcloud.io \
-        -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+        -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
         -Dsonar.branch.name=feat-devsecops
 
 
