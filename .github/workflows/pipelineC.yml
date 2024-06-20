@@ -80,18 +80,16 @@ jobs:
 #--------------------- SCA -------------------------------------------
       
   SCA:
-    needs: SAST
+    needs: SAST #CON NEEDS CREAMOS LA DEPENDENCIA CON LA EJECUCION EXITOSA DEL JOB ANTERIOR
     runs-on: ubuntu-latest
     steps:
     
     - name: Checkout code
       uses: actions/checkout@v2      
 
-    - name: Build
+    - name: Build #NO SE UTILIZA EL BUILD DEL JOB ANTERIOR PORQUE ESTE ES UN JOB NUEVO
       id: build
       run: |
-        #pwd
-        #ls -R
         if [ -f "build.gradle" ]
         then
           echo "Utiliza build.gradle, proyecto Java"
@@ -102,15 +100,15 @@ jobs:
           echo "Otro tipo de proyecto"
         fi
     
-    - name: Dependency Check
-      uses: dependency-check/Dependency-Check_Action@1.1.0
+    - name: Dependency Check  
+      uses: dependency-check/Dependency-Check_Action@1.1.0  #HERRAMIENTA OPENSOURCE PARA EL CHEQUEO DE DEPENDENCIAS DE TERCEROS
       env:
         JAVA_HOME: /opt/jdk
       id: Depcheck
       with:
         project: '${{ github.event.repository.name }}'
         path: '.'
-        format: 'HTML'
+        format: 'HTML' #CON ESTO INDICAMOS EL FORMATO DEL INFORME QUE EN ESTE CASO SERA HTML
         out: 'reports'
         args: >
           --failOnCVSS 7
@@ -124,60 +122,60 @@ jobs:
 
 #-------------------- Docker Build Image ----------------------------
 
-  DockerBuild:
-    needs: SCA
-    runs-on: self-hosted
-    steps:
+#  DockerBuild:
+#    needs: SCA
+#    runs-on: self-hosted
+#    steps:
     
-    - name: Checkout code
-      uses: actions/checkout@v2
+#    - name: Checkout code
+#      uses: actions/checkout@v2
 
-    - name: Docker Login
-      uses: docker/login-action@v3.0.0
-      with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PASS }}
+#    - name: Docker Login
+#      uses: docker/login-action@v3.0.0
+#      with:
+#        username: ${{ secrets.DOCKER_USER }}
+#        password: ${{ secrets.DOCKER_PASS }}
 
-    - name: Download JAR
-      uses: actions/download-artifact@master
-      with:
-        name: JAR
-        path: ${{github.workspace}}
+#    - name: Download JAR
+#      uses: actions/download-artifact@master
+#      with:
+#        name: JAR
+#        path: ${{github.workspace}}
     
-    - name: Build Docker
-      run: |
-        docker build --tag cmendoza83/cursodevsecops-test:latest .
+#    - name: Build Docker
+#      run: |
+#        docker build --tag cmendoza83/cursodevsecops-test:latest .
         
-    - name: Push Docker
-      run: | 
-        docker push cmendoza83/cursodevsecops-test:latest
+#    - name: Push Docker
+#      run: | 
+#        docker push cmendoza83/cursodevsecops-test:latest
 
 # ------------------ Docker Scan ------------------------------------
 
-  DockerScan:
-    needs: DockerBuild
-    runs-on: ubuntu-latest
-    steps:
+#  DockerScan:
+#    needs: DockerBuild
+#    runs-on: ubuntu-latest
+#    steps:
     
-    - name: Docker Login
-      uses: docker/login-action@v3.0.0
-      with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PASS }}
+#    - name: Docker Login
+#      uses: docker/login-action@v3.0.0
+#      with:
+#        username: ${{ secrets.DOCKER_USER }}
+#        password: ${{ secrets.DOCKER_PASS }}
 
-    - name: Pull de la Imagen Docker
-      run: |
-        docker pull cmendoza83/cursodevsecops-test:latest
+#    - name: Pull de la Imagen Docker
+#      run: |
+#        docker pull cmendoza83/cursodevsecops-test:latest
     
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: 'cmendoza83/cursodevsecops-test:latest'
-        format: 'table'
+#    - name: Run Trivy vulnerability scanner
+#      uses: aquasecurity/trivy-action@master
+#      with:
+#        image-ref: 'cmendoza83/cursodevsecops-test:latest'
+#        format: 'table'
     
-    - name: Push Docker
-      run: | 
-        docker push cmendoza83/cursodevsecops-test:latest
+#    - name: Push Docker
+#      run: | 
+#        docker push cmendoza83/cursodevsecops-test:latest
 
 
 # ----------------- DAST -----------------------------------------
