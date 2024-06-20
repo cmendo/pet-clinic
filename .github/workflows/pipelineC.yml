@@ -114,7 +114,7 @@ jobs:
           --failOnCVSS 7
           --enableRetired
  
-    - name: Upload Test result
+    - name: Upload Test result #CON ESTE FRAGMENTO DE CODIGO RESCATAMOS EL REPORTE GENERADO ANTERIORMENTE
       uses: actions/upload-artifact@master
       with:
         name: Depcheck report
@@ -122,33 +122,33 @@ jobs:
 
 #-------------------- Docker Build Image ----------------------------
 
-#  DockerBuild:
-#    needs: SCA
-#    runs-on: self-hosted
-#    steps:
+  DockerBuild:
+    needs: SCA
+    runs-on: self-hosted
+    steps:
     
-#    - name: Checkout code
-#      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-#    - name: Docker Login
-#      uses: docker/login-action@v3.0.0
-#      with:
-#        username: ${{ secrets.DOCKER_USER }}
-#        password: ${{ secrets.DOCKER_PASS }}
+    - name: Docker Login
+      uses: docker/login-action@v3.0.0
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASS }}
 
-#    - name: Download JAR
-#      uses: actions/download-artifact@master
-#      with:
-#        name: JAR
-#        path: ${{github.workspace}}
+    - name: Download JAR
+      uses: actions/download-artifact@master
+      with:
+        name: JAR
+        path: ${{github.workspace}}
     
-#    - name: Build Docker
-#      run: |
-#        docker build --tag cmendoza83/cursodevsecops-test:latest .
+    - name: Build Docker
+      run: |
+        docker build --tag cmendoza83/cursodevsecops-test:latest .
         
-#    - name: Push Docker
-#      run: | 
-#        docker push cmendoza83/cursodevsecops-test:latest
+    - name: Push Docker
+      run: | 
+        docker push cmendoza83/cursodevsecops-test:latest
 
 # ------------------ Docker Scan ------------------------------------
 
