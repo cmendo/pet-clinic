@@ -66,7 +66,12 @@ jobs:
         else
           echo "Tipo de proyecto desconocido"
         fi
-    
+
+
+    - name: Enable execution gradlew
+      run: | 
+        chmod 777 gradlew
+        
     - name: Run SonarQube analysis
       run: |
         ./gradlew sonarqube \
@@ -90,6 +95,8 @@ jobs:
     - name: Build #NO SE UTILIZA EL BUILD DEL JOB ANTERIOR PORQUE ESTE ES UN JOB NUEVO
       id: build
       run: |
+        #pwd
+        #ls -R
         if [ -f "build.gradle" ]
         then
           echo "Utiliza build.gradle, proyecto Java"
@@ -120,6 +127,14 @@ jobs:
         name: Depcheck report
         path: ${{github.workspace}}/reports
 
+    - name: Upload JAR #CON ESTE FRAGMENTO DE CODIGO RESCATAMOS EL JAR GENERADO ANTERIORMENTE
+      uses: actions/upload-artifact@master
+      with:
+        name: JAR
+        path: ${{github.workspace}}/build/libs/ 
+
+
+        
 #-------------------- Docker Build Image ----------------------------
 
   DockerBuild:
@@ -137,7 +152,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASS }}
 
     - name: Download JAR
-      uses: actions/download-artifact@master
+      uses: actions/download-artifact@master #CON ESTE ACTION DESCARGAMOS EL JAR QUE GENERAMOS EN EL JOB ANTERIOR
       with:
         name: JAR
         path: ${{github.workspace}}
@@ -146,9 +161,10 @@ jobs:
       run: |
         docker build --tag cmendoza83/cursodevsecops-dkr:latest .
         
-    - name: Push Docker
-      run: | 
-        docker push cmendoza83/cursodevsecops-dkr:latest
+  #  - name: Push Docker
+  #    run: | 
+  #      docker push cmendoza83/cursodevsecops-dkr:latest
+
 
 # ------------------ Docker Scan ------------------------------------
 
