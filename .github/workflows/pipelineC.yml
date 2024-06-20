@@ -124,7 +124,7 @@ jobs:
 
   DockerBuild:
     needs: SCA
-    runs-on: self-hosted
+    runs-on: self-hosted #ESTA LINEA ES PARA UTILIZAR EL RUNNER DE NUESTRA MAQUINA LOCAL
     steps:
     
     - name: Checkout code
@@ -144,11 +144,11 @@ jobs:
     
     - name: Build Docker
       run: |
-        docker build --tag cmendoza83/cursodevsecops-test:latest .
+        docker build --tag cmendoza83/cursodevsecops-dkr:latest .
         
     - name: Push Docker
       run: | 
-        docker push cmendoza83/cursodevsecops-test:latest
+        docker push cmendoza83/cursodevsecops-dkr:latest
 
 # ------------------ Docker Scan ------------------------------------
 
