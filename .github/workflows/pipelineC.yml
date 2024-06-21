@@ -205,7 +205,7 @@ jobs:
       run: |
         container_name="pet-clinic-deploy"
         echo $container_name
-        if [ "$(docker ps -aq -f name=$container_name)" ]; then
+        if [ $(docker ps -aq -f name=$container_name) ]; then
           docker start $container_name
         else
         #sleep 30
