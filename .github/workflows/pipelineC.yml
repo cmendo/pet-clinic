@@ -204,8 +204,9 @@ jobs:
     - name: Despliegue Aplicaion
       run: |
         container_name="pet-clinic-deploy"
-        echo $container_name
-        if [ $(docker ps -aq -f name=$container_name) ]; then
+        # Capturar la salida del comando `docker ps` para verificar si el contenedor está en ejecución
+        docker_ps_output=$(docker ps --filter "name=$container_name" --format "{{.Names}}")
+        if [ "$docker_ps_output" = "$container_name" ]; then
           docker start $container_name
         else
         #sleep 30
