@@ -200,7 +200,7 @@ jobs:
     needs: DockerScan
     runs-on: self-hosted
     steps:
-    
+#CON ESTO DESPLEGAMOS DESDE EL RUNNER    
 #    - name: Despliegue Aplicaion
 #      run: |
 #        docker run -p 8085:8085 --name pet-clinic-deploy -d cmendoza83/cursodevsecops-dkr:latest
@@ -213,7 +213,7 @@ jobs:
 #      uses: zaproxy/action-baseline@v0.11.0
 #      with:
 #        target: 'http://localhost:8085/'
-    
+#CON ESTO DESPLEGAMOS DESDE DOCKER HUB    
     - name: OWASP ZAP Scan
       run: |
         docker pull owasp/zap2docker-stable
