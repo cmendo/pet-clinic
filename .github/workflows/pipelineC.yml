@@ -181,12 +181,12 @@ jobs:
 
     - name: Pull de la Imagen Docker
       run: |
-        docker pull cmendoza83/cursodevsecops-test:latest
+        docker pull cmendoza83/cursodevsecops-dkr:latest
     
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'cmendoza83/cursodevsecops-test:latest'
+        image-ref: 'cmendoza83/cursodevsecops-dkr:latest'
         format: 'table'
     
 #    - name: Push Docker
