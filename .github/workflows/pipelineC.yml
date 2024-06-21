@@ -149,7 +149,7 @@ jobs:
       uses: docker/login-action@v3.0.0
       with:
         username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_TOKEN }}
+        password: ${{ secrets.DOCKER_PASS }}
 
     - name: Download JAR
       uses: actions/download-artifact@master #CON ESTE ACTION DESCARGAMOS EL JAR QUE GENERAMOS EN EL JOB ANTERIOR
@@ -201,9 +201,9 @@ jobs:
     runs-on: self-hosted
     steps:
 #CON ESTO DESPLEGAMOS DESDE EL RUNNER    
-#    - name: Despliegue Aplicaion
-#      run: |
-#        docker run -p 8085:8085 --name pet-clinic-deploy -d cmendoza83/cursodevsecops-dkr:latest
+    - name: Despliegue Aplicaion
+      run: |
+        docker run -p 8085:8085 --name pet-clinic-deploy -d cmendoza83/cursodevsecops-dkr:latest
 
 #    - name: Sleep
 #      run: | 
