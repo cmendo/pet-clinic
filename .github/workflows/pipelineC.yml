@@ -157,13 +157,13 @@ jobs:
         name: JAR
         path: ${{github.workspace}}
     
-#    - name: Build Docker
-#      run: |
-#        docker build --tag cmendoza83/cursodevsecops-dkr:latest .
+    - name: Build Docker
+      run: |
+        docker build --tag cmendoza83/cursodevsecops-dkr:latest .
   #LO SIGUIENTE SE AGREGA PORQUE TRIVY NO TRABAJA EN MAQUINAS WINDOWS Y SE NECESITA EN EL SIGUIENTE JOB PUEDA SER ESCANEADO DESDE ubuntu-latest
-#    - name: Push Docker
-#      run: | 
-#        docker push cmendoza83/cursodevsecops-dkr:latest
+    - name: Push Docker
+      run: | 
+        docker push cmendoza83/cursodevsecops-dkr:latest
 
 
 # ------------------ Docker Scan ------------------------------------
