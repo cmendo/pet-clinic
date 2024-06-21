@@ -205,6 +205,7 @@ jobs:
       run: |
         docker stop pet-clinic-deploy
         docker rm pet-clinic-deply
+        sleep 30
         docker run -p 8085:8085 --name pet-clinic-deploy -d cmendoza83/cursodevsecops-dkr:latest
 
 #    - name: Sleep
