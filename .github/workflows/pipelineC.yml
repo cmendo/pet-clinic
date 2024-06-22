@@ -193,7 +193,7 @@ jobs:
       run: | 
         docker push cmendoza83/cursodevsecops-dkr:latest
         docker start pet-clinic-deploy
-        #sleep 30
+        sleep 30
 
 
 # ----------------- DAST -----------------------------------------
