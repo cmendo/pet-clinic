@@ -236,9 +236,7 @@ jobs:
 #        docker pull owasp/zap2docker-stable
 #        docker run --rm -v ${PWD}:/zap/wrk/:rw -t owasp/zap2docker-stable & zap-baseline.py -t http://localhost:8085 -r DAST.html
 ######################################################################
-
-
-
+######################################################################
 #    - name: Despliegue Aplicaion
 #      run: |
 #        docker_ps_output=$(docker ps --filter "name=pet-clinic-deploy" --format "{{.Names}}")
