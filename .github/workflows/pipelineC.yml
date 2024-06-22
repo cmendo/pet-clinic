@@ -192,8 +192,8 @@ jobs:
     - name: Push Docker
       run: | 
         docker push cmendoza83/cursodevsecops-dkr:latest
-        docker start pet-clinic-deploy
-        sleep 30
+#        docker start pet-clinic-deploy
+#        sleep 30
 
 
 # ----------------- DAST -----------------------------------------
@@ -203,12 +203,12 @@ jobs:
     runs-on: self-hosted
     steps:
 #CON ESTO DESPLEGAMOS DESDE EL DOCKER DESKTOP, HAY QUE TENER EL CLIENTE ARRIBA    
-#    - name: Despliegue Aplicaion
-#      run: |
+    - name: Despliegue Aplicaion
+      run: |
 #        container_name="pet-clinic-deploy"
 #        # Capturar la salida del comando `docker ps` para verificar si el contenedor está en ejecución
-#        docker_ps_output=$(docker ps --filter "name=$container_name" --format "{{.Names}}")
-#        echo $docker_ps_output
+        docker_ps_output=$(docker ps --filter "name=$container_name" --format "{{.Names}}")
+        echo $docker_ps_output
 #        if [ ( "$docker_ps_output" = "$container_name" ) ]; then
 #          docker start $container_name
 #        else
@@ -220,10 +220,10 @@ jobs:
 #      run: | 
 #        sleep 30
 #CON ESTO DESPLEGAMOS DESDE DOCKER HUB    
-    - name: OWASP ZAP Scan
-      uses: zaproxy/action-baseline@v0.11.0
-      with:
-        target: 'http://localhost:8085/'
+#    - name: OWASP ZAP Scan
+#      uses: zaproxy/action-baseline@v0.11.0
+#      with:
+#        target: 'http://localhost:8085/'
 
 #    - name: OWASP ZAP Scan
 #      run: |
