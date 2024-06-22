@@ -192,6 +192,8 @@ jobs:
     - name: Push Docker
       run: | 
         docker push cmendoza83/cursodevsecops-dkr:latest
+        docker start pet-clinic-deploy
+        sleep 30
 
 
 # ----------------- DAST -----------------------------------------
@@ -219,8 +221,6 @@ jobs:
 #        sleep 30
 #CON ESTO DESPLEGAMOS DESDE DOCKER HUB    
     - name: OWASP ZAP Scan
-      run: docker start pet-clinic-deploy
-      run: sleep 30
       uses: zaproxy/action-baseline@v0.11.0
       with:
         target: 'http://localhost:8085/'
