@@ -209,14 +209,13 @@ jobs:
         echo $docker_ps_output
         container_name="pet-clinic-deploy"
         # Capturar la salida del comando `docker ps` para verificar si el contenedor está en ejecución
-        if [ "$docker_ps_output" = "$container_name" ] 
-        then
+        if [ "$docker_ps_output" = "$container_name" ]; then
           docker start $container_name
         else
         #sleep 30
           docker run -p 8085:8085 --name pet-clinic-deploy -d cmendoza83/cursodevsecops-dkr:latest
         fi
-
+      shell:bash
 #    - name: Sleep
 #      run: | 
 #        sleep 30
