@@ -205,7 +205,7 @@ jobs:
 #CON ESTO DESPLEGAMOS DESDE EL DOCKER DESKTOP, HAY QUE TENER EL CLIENTE ARRIBA    
     - name: Despliegue Aplicaion
       run: |
-        docker_ps_output=$(docker ps --filter "name=$container_name" --format "{{.Names}}")
+        docker_ps_output=$(docker ps --filter "name=pet-clinic-deploy" --format "{{.Names}}")
         echo $docker_ps_output
 #        container_name="pet-clinic-deploy"
 #        # Capturar la salida del comando `docker ps` para verificar si el contenedor está en ejecución
