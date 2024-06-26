@@ -202,23 +202,6 @@ jobs:
     needs: DockerScan
     runs-on: self-hosted
     steps:
-#      - name: Check if Docker container is running
-#        run: |
-#          # Declarar la variable con el nombre del contenedor
-#          container_name='pet-clinic-deploy'
-#        
-#          # Capturar la salida del comando `docker ps` para verificar si el contenedor está en ejecución
-#          docker_ps_output=$(docker ps --filter "name=$container_name" --format "{{.Names}}")
-#          echo "$container_name"
-#          echo "$DOCKER_PS_OUTPUT=$docker_ps_output" >> $GITHUB_ENV
-#          echo "El nombre del contenedor es: $DOCKER_PS_OUTPUT"
-#          # Comparar la salida del comando con el valor de la variable
-#          #if [ "$docker_ps_output" = "$container_name" ]; then
-#          #  echo "El contenedor $container_name está en ejecución."
-#          #else
-#          #  echo "El contenedor $container_name no está en ejecución."
-#          #fi
-#        shell: bash
 #CON ESTO DESPLEGAMOS DESDE EL DOCKER DESKTOP, HAY QUE TENER EL CLIENTE ARRIBA    
     - name: Despliegue Aplicaion
       run: |
