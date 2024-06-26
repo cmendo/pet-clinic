@@ -231,7 +231,7 @@ jobs:
           echo "Stopping container $container_name..."
           docker stop $container_name
         else
-          #echo "Container $container_name is not running."
+          echo "Container $container_name is not running."
         fi
 
     - name: Sleep
