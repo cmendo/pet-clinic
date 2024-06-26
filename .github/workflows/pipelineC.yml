@@ -200,38 +200,39 @@ jobs:
 
   DAST:
     needs: DockerScan
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    #runs-on: self-hosted
     steps:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 #CON ESTO DESPLEGAMOS DESDE EL DOCKER DESKTOP, HAY QUE TENER EL CLIENTE ARRIBA
-    - name: Stop Docker container
-      run: |
-        # Declarar la variable con el nombre del contenedor
-        $container_name = "pet-clinic-deploy"
-        
-        # Capturar la salida del comando `docker ps` para verificar si el contenedor está en ejecución
-        $docker_ps_output = docker ps --filter "name=$container_name" --format "{{.Names}}"
-        
-        # Comparar la salida del comando con el valor de la variable
-        if ($docker_ps_output -eq $container_name) {
-            Write-Output "Stopping container $container_name..."
-            docker stop $container_name
-        } else {
-            Write-Output "Container $container_name is not running."
-        }
-      shell: pwsh
-
-# - name: Stop Docker container
-    #   shell: bash
+    # - name: Stop Docker container
     #   run: |
-    #     container_name="pet-clinic-deploy"
-    #     if [ "$(docker ps -q -f name=$container_name)" ]; then
-    #       echo "Stopping container $container_name..."
-    #       docker stop $container_name
-    #     else
-    #       #echo "Container $container_name is not running."
-    #     fi
+      #   # Declarar la variable con el nombre del contenedor
+      #   $container_name = "pet-clinic-deploy"
+        
+      #   # Capturar la salida del comando `docker ps` para verificar si el contenedor está en ejecución
+      #   $docker_ps_output = docker ps --filter "name=$container_name" --format "{{.Names}}"
+        
+      #   # Comparar la salida del comando con el valor de la variable
+      #   if ($docker_ps_output -eq $container_name) {
+      #       Write-Output "Stopping container $container_name..."
+      #       docker stop $container_name
+      #   } else {
+      #       Write-Output "Container $container_name is not running."
+      #   }
+      # shell: pwsh
+
+- name: Stop Docker container
+      shell: bash
+      run: |
+        container_name="pet-clinic-deploy"
+        if [ "$(docker ps -q -f name=$container_name)" ]; then
+          echo "Stopping container $container_name..."
+          docker stop $container_name
+        else
+          #echo "Container $container_name is not running."
+        fi
 
     - name: Sleep
       run: | 
