@@ -223,7 +223,7 @@ jobs:
       #   }
       # shell: pwsh
 
-- name: Stop Docker container
+    - name: Stop Docker container
       shell: bash
       run: |
         container_name="pet-clinic-deploy"
