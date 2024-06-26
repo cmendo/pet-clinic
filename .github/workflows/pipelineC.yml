@@ -214,21 +214,18 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
-#CON ESTO DESPLEGAMOS DESDE EL DOCKER DESKTOP, HAY QUE TENER EL CLIENTE ARRIBA
+
     - name: Stop Docker container
       shell: bash
       run: |
         container_name="pet-clinic-deploy"
         if [ "$(docker ps -q -f name=$container_name)" ]; then
-          echo "Stopping container $container_name..."
+          echo "Deteniendo el contenedor $container_name..."
           docker stop $container_name
+          sleep 30
         else
-          echo "Container $container_name is not running."
+          echo "El contenedor $container_name no esta corriendo."
         fi
-
-    - name: Sleep
-      run: | 
-        sleep 30
 
     - name: Despliegue Aplicacion
       run: |
